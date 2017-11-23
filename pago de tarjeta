@@ -1,0 +1,44 @@
+string leer_marcat(char IDp)
+{
+	if(IDp=='1')
+		cout<<"Con que tarjeta de credito le gustaria pagar?"<<endl;
+	string tarj[2]={"VISA","MasterCard"};
+	int tar;
+	do{
+		cout<<"\n [1]"<<tarj[1]<<endl;
+		cout<<"\n [2]"<<tarj[2]<<endl;
+	}while(tar<1 && tar>2);
+	string marca=tarj[tar];
+	system ("cls");
+	return (marca);
+}
+string leer_tarjeta(char IDp)
+{
+	string number;
+	do{
+		if(IDp=='1')
+		cout<<"Ingrese el numero de tarjeta de credito:"<<endl;
+		cin>>number;
+	}while(number.size()==0);
+	if(IDp=='1')
+		cout<<"Presione cualquier tecla para continuar"<<endl;
+	getch();
+	system("cls");
+	return number;
+}
+
+
+string leer_pin(char IDp)
+{
+	string pin;
+	do{
+		if(IDp=='1')
+			cout<<"Ingrese el pin de su tarjeta(4 digitos):"<<endl;
+			cin>>pin;
+	}while(pin.size()!=4);
+	if(IDp=='1')
+		cout<<"Presione cualquier letra para continuar"<<endl;
+	getch();
+	system("cls");
+	return pin;
+}
