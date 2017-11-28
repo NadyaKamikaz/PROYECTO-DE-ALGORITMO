@@ -1,0 +1,169 @@
+///posdata me falta consultar y borrar 
+
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include <string>
+#include "stdio.h"
+
+
+using namespace std;
+struct tpropietario
+ {
+  string IDp;
+  int NITp;
+  int no_lugar;
+  string establecimientop;
+  string descripcionp;
+  string direccionp;
+  string correop;
+  int telefonop;
+  int interes;
+  int categoriap;
+  int estadop;
+  struct tfactura;
+  };
+
+
+FILE *ptr;
+
+	
+tpropietario registrro;
+//lugares
+void insertar_lugares(void);
+void listar_lugares(void); //nadia
+//void modificar_lugares(int N);
+void consultar_lugares(void);//nadia
+void borrar_lugares(void);//nadia
+
+
+void main()
+{
+	int op;
+	do
+	{
+		cout<<"              MENU          "<<endl;
+		cout<<"(1) Adicionar-Insertar"<<endl;
+		cout<<"(2) Listado"<<endl;
+		//cout<<"(3) Modificacion"<<endl;
+		cout<<"(4) Consulta"<<endl;
+		cout<<"(5) Borrado"<<endl;
+		cout<<"(0) Salir"<<endl;
+		cout<<endl;
+		cout<<"Ingrese la opcion que desea: ";
+		cin>>op;
+		switch(op)
+		{
+		case 1:
+			{
+				insertar_lugares();
+				break;
+			}
+		case 2:
+			{
+				listar_lugares();
+				break;
+			}
+		
+		case 0:
+			{
+				cout<<"Salir";
+				break;
+			}
+		default:
+			{
+			}
+		}
+		cout<<endl;
+	}while(op!=0);
+	insertar_lugares();
+	listar_lugares();
+	getch();
+
+}
+void insertar_lugares(void) //
+{ 
+	
+  int no_lugar;  // Variable local para el numero de lugar
+ 
+  cout << "\n\rInsertar  REGISTROS DE LUGARES"; 
+  ptr=fopen("propietario.dat","rb+"); // Intenta abrir el archivo  
+                                     // en modo de lectura/escritura 
+  if(ptr==NULL) 
+  ptr=fopen("propietario.dat","wb"); // Crea el archivo en caso de no // existir 
+  cout << "\n\n\n\rNumero de lugar: "; 
+  cin >> no_lugar; 
+  fread(&registrro,sizeof(registrro),1,ptr); // Lee el "registrro", de tamano=sizeof(registrro) del archivo "ptr" 
+  while(!feof(ptr)) // Ciclo mientras no se encuentre el final del 
+                      // archivo 
+  { 
+    if(registrro.no_lugar==no_lugar) 
+    { 
+       cout << "\n\n\n\rRegistro duplicado !!!"; 
+       fclose(ptr); 
+       getch(); 
+       return; 
+    } 
+    fread(&registrro,sizeof(registrro),1,ptr); 
+  } 
+  cin.ignore();
+  cout << "\n\rEstablecimiento: "; 
+  getline(cin,registrro.establecimientop); 
+  cin.ignore();
+  cout << "\n\rDescripcion: ";
+  getline(cin,registrro.descripcionp);
+  cin.ignore();
+  cout << "\n\rDireccion     : "; 
+  cin >> registrro.direccionp;
+  cin.ignore();
+  cout << "\n\rCorreo  : "; 
+  cin >> registrro.correop; 
+  cin.ignore();
+  cout<<"\n\rTelefono :";
+  cin>>registrro.telefonop;
+  cin.ignore();
+  cout<<"\n\rInteres  :";
+  cin>>registrro.interes;
+  cout<<"\n\rCategoria  :";
+  cin>>registrro.interes;
+   cout<<"\n\rEstado :";
+   cin>>registrro.interes;
+
+  
+
+  registrro.no_lugar=no_lugar; 
+  fwrite(&registrro,sizeof(registrro),1,ptr); // Grabar el Registro  
+  fclose(ptr); // Cierra el archivo 
+  cout << "\n\n\n\rlugar registrado !!!"; 
+  cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+  getch(); 
+  return; 
+} 
+void listar_lugares(void) 
+{ 
+  cout << "\n\rLISTADO DE REGISTROS DE LUGARES"; 
+  ptr=fopen("propietario.dat","rb"); // Intenta abrir el archivo propietario.dat
+                             // en modo de solo lectura 
+  if(ptr==NULL) 
+  { 
+    cout << "\n\n\n\rNo existe el archivo !!!"; 
+    cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+    getch(); 
+    return; 
+  } 
+  cout<< "\n\rNo_lug      ESTABLECIMIENTO   DESCRIPCION     DIRECCCION      CORREO       TELEFONO       INTERES   CATEGORIA  ESTADO"<<endl; 
+  cout << "\n\r--------------------------------------------------------------------------------------------------------------------"<<endl; 
+  fread(&registrro,sizeof(registrro),1,ptr); // Lee el "Registro", de tamano=sizeof(registrro) del archivo "ptr"
+  while(!feof(ptr)) // Ciclo mientras no se encuentre el final del archivo 
+  { 
+    cout<<registrro.no_lugar<<"\t""\t"<<registrro.establecimientop<<"\t""\t"<<registrro.descripcionp<<"\t""\t"<<registrro.direccionp<<"\t""\t"<<registrro.correop<<"\t""\t"<<registrro.telefonop<<"\t""\t"<<registrro.interes<<registrro.categoriap<<"\t""\t"<<registrro.estadop<<endl; 
+    fread(&registrro,sizeof(registrro),1,ptr); 
+  } 
+  fclose(ptr); // Cierra el archivo 
+  cout << "\n\r---------------------------------------------------------"; 
+  cout << "\n\rFin del listado !!!"; 
+  cout << "\n\r<<< Oprima cualquier tecla para continuar >>>"; 
+  getch(); 
+  return; 
+}
